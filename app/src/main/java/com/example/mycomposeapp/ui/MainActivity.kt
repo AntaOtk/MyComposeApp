@@ -136,6 +136,7 @@ class MainActivity : ComponentActivity() {
                 phone = "+7 495 495 95 95",
                 address = "г. Москва, 3-я улица Строителей, д. 25, кв. 12",
                 isFavorite = true,
+                email = "lucashin@ya.ru"
             )
         )
     }
@@ -149,7 +150,7 @@ class MainActivity : ComponentActivity() {
                 familyName = "Кузякин",
                 phone = "+792321",
                 address = "г. Рязань, улица Ленина, д. 3, кв. 2",
-                imageRes = R.drawable.car
+                imageRes = R.drawable.car,
             )
         )
     }
