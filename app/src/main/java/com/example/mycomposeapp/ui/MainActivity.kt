@@ -41,13 +41,21 @@ class MainActivity : ComponentActivity() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             ShowImage(contact)
-            Text(
-                style = MaterialTheme.typography.h6,
-                text = "${contact.name} ${contact.surname.orEmpty()}")
+            if (contact.surname.isNullOrEmpty()) {
+                Text(
+                    style = MaterialTheme.typography.h6,
+                    text = contact.name
+                )
+            } else {
+                Text(
+                    style = MaterialTheme.typography.h6,
+                    text = "${contact.name} ${contact.surname}"
+                )
+            }
             FamilyShow(contact.isFavorite, contact.familyName)
-            InfoRow( R.string.phone, contact.phone)
-            InfoRow( R.string.address ,contact.address)
-            if (!contact.email.isNullOrEmpty()) InfoRow( R.string.email ,contact.email)
+            InfoRow(R.string.phone, contact.phone)
+            InfoRow(R.string.address, contact.address)
+            if (!contact.email.isNullOrEmpty()) InfoRow(R.string.email, contact.email)
         }
     }
 
@@ -59,7 +67,8 @@ class MainActivity : ComponentActivity() {
                 text = familyName
             )
             if (isFavorite) Image(
-                modifier = Modifier.padding(start = 16.dp)
+                modifier = Modifier
+                    .padding(start = 16.dp)
                     .align(Alignment.CenterVertically),
                 painter = painterResource(id = android.R.drawable.star_big_on),
                 contentDescription = null
@@ -77,19 +86,14 @@ class MainActivity : ComponentActivity() {
                 .height(100.dp)
         ) {
             if (contact.imageRes != null) {
-                ImagePreview(contact.imageRes)
+                Image(
+                    modifier = Modifier.fillMaxSize(),
+                    alignment = Alignment.Center,
+                    painter = painterResource(contact.imageRes),
+                    contentDescription = null
+                )
             } else RoundInitials(contact.name.take(1) + contact.familyName.take(1))
         }
-    }
-
-    @Composable
-    fun ImagePreview(imageRes: Int) {
-        Image(
-            modifier = Modifier.fillMaxSize(),
-            alignment = Alignment.Center,
-            painter = painterResource(imageRes),
-            contentDescription = null
-        )
     }
 
     @Composable
@@ -112,16 +116,19 @@ class MainActivity : ComponentActivity() {
 
     @Composable
     fun InfoRow(text: Int, content: String) {
-        Row ( modifier = Modifier.padding(vertical = 8.dp)){
+        Row(modifier = Modifier.padding(vertical = 8.dp)) {
             Text(
                 modifier = Modifier.weight(1F),
                 fontStyle = FontStyle.Italic,
                 textAlign = TextAlign.End,
-                text = getString(text)+":")
+                text = getString(text) + ":"
+            )
             Text(
-                modifier = Modifier.weight(1F)
+                modifier = Modifier
+                    .weight(1F)
                     .padding(start = 8.dp),
-                text = content)
+                text = content
+            )
         }
     }
 
@@ -136,6 +143,7 @@ class MainActivity : ComponentActivity() {
                 phone = "+7 495 495 95 95",
                 address = "г. Москва, 3-я улица Строителей, д. 25, кв. 12",
                 isFavorite = true,
+                email = "lucashin@ya.ru"
             )
         )
     }
@@ -149,7 +157,7 @@ class MainActivity : ComponentActivity() {
                 familyName = "Кузякин",
                 phone = "+792321",
                 address = "г. Рязань, улица Ленина, д. 3, кв. 2",
-                imageRes = R.drawable.car
+                imageRes = R.drawable.car,
             )
         )
     }
